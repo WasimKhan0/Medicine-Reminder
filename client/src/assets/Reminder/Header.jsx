@@ -8,12 +8,10 @@ const Header = () => {
   const getCurrentUser = async () => {
      
     const userId = await JSON.parse(localStorage.getItem("user"));
-    // console.log("id",userId);
-    const res = await axios.get(
+     const res = await axios.get(
       `http://localhost:8000/api/auth/${userId}`
     );
-    // console.log("name",res.data);
-      setName(res.data.username);
+       setName(res.data.username);
   };
 
   useEffect(() => {

@@ -7,6 +7,7 @@ const User = require("../models/userModel");
 router.post("/register", async (req, res) => {
   try {
     const { username, email, mobile, password } = req.body;
+      
     const salt = await bcrypt.genSalt(10);
     const hashedPass = bcrypt.hashSync(password, salt);
 
@@ -14,7 +15,7 @@ router.post("/register", async (req, res) => {
       username,
       email,
       mobile,
-      password: hashedPass, 
+      password: hashedPass,
     });
 
     const userReg = await user.save();
@@ -24,6 +25,7 @@ router.post("/register", async (req, res) => {
     res.status(500).json(err);
   }
 });
+ 
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -37,7 +39,6 @@ router.post("/login", async (req, res) => {
     if (!match) {
       return res.status(401).json("Invalid credentials");
     }
- 
 
     res.status(200).json({ message: "Login successful", user });
   } catch (err) {
@@ -58,21 +59,5 @@ router.get("/:id", async (req, res) => {
     res.status(500).json(err);
   }
 });
-router.put("/logout/:id", async (req, res) => {
-  const userId = req.params.id;
-  try {
-    const user = await User.findByIdAndUpdate(
-      userId,
-      { isLogin: false },
-      { new: true }
-    );
-    if (!user) {
-      return res.status(404).json("user not found");
-    }
-    return res.status(200).json("user logged out successfully");
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
-});
+ 
 module.exports = router;

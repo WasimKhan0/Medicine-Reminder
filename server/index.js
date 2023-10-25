@@ -23,8 +23,7 @@ mongoose
 
 setInterval(async () => {
   const res = await Reminder.find({});
-  // const user = await User.findOne({isLogin:true});
-  // console.log(user);
+  
   if (res) {
     res.forEach((reminder) => {
       if (!reminder.isReminded) {
@@ -53,8 +52,7 @@ setInterval(async () => {
               to: `+91${reminder.caretakerNumber}`,
             })
             .then((message) => console.log(message.sid));
-          // })
-        }
+         }
       }
     });
   }
